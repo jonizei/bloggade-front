@@ -1,0 +1,89 @@
+.blog-post {
+    width: 70%;
+    height: 40%;
+    padding: 1%;
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10%;
+    margin-bottom: 10%;
+}
+
+.blog-header {
+    display: flex;
+    width: 96%;
+    height: 16%;
+    padding: 2%;
+    background-color: black;
+    border: 5px solid #34495E;
+    border-top-right-radius: 25px;
+}
+
+.blog-content {
+    width: 100%;
+    height: 64%;
+    background-color: black;
+    border: 5px solid #34495E;
+    border-top: none;
+}
+
+.blog-text {
+    font-family: 'Courier New', Courier, monospace;
+    color: yellow;
+}
+
+.blog-title {
+    display: inline-block;
+    width: 50%;
+    height: 100%;
+    text-align: left;
+    margin-top: 2%;
+    margin-left: 2%;
+}
+
+.blog-author {
+    display: inline-block;
+    width: 50%;
+    height: 100%;
+    text-align: right;
+    margin-top: 2%;
+    margin-right: 2%;
+}
+
+.blog-description {
+    text-align: left;
+    width: 80%;
+    height: 30%;
+    padding-left: 5%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+.blog-footer {
+    display: flex;
+    width: 96%;
+    height: 16%;
+    padding: 2%;
+    background-color: black;
+    border: 5px solid #34495E;
+    border-bottom-left-radius: 25px;
+    border-top: none;
+}
+
+.blog-comments {
+    display: inline-block;
+    width: 50%;
+    height: 100%;
+    text-align: left;
+    margin-top: 2%;
+    margin-left: 2%;
+}
+
+.blog-link {
+    width: 90%;
+    height: 20%;
+    text-align: right;
+    padding: 5%;
+    margin-right: 5%;
+    margin-bottom: 5%;
+}
