@@ -1,0 +1,19 @@
+.blog-post {
+    width: 70%;
+    height: 30%;
+    padding: 1%;
+    float: none;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    background-color: black;
+    border: 5px solid #34495E;
+    border-radius: 2%;
+}
+
+.blog-header {
+    width: 100%;
+    height: 15%;
+    border-bottom: 5px solid #34495E;
+}
