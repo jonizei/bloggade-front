@@ -3,8 +3,8 @@
     float: left;
     width: 60%;
     height: 100%;
-    background-color: #808B96;
+    background-color: #283747;
     border-radius: 2%;
     align-content: center;
-    overflow: auto;
+    overflow-x: auto;
   }
