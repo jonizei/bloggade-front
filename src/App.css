@@ -32,17 +32,3 @@ html, body {
     transform: rotate(360deg);
   }
 }
-
-.left-sidebar {
-  display: flex;
-  float: left;
-  width: 20%;
-  height: 100%;
-}
-
-.right-sidebar {
-  display: flex;
-  float: left;
-  width: 20%;
-  height: 100%;
-}
