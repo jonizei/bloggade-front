@@ -3,6 +3,14 @@ import './Login.css';
 
 class Login extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            onSubmit : this.props.onSubmit
+        }
+    }
+
     render() {
         return(
             <div className="page-container">
@@ -15,18 +23,20 @@ class Login extends Component {
                     <div className="input-container">
 
                         <table className="input-grid">
-                            <tr className="input-row">
-                                <td><label className="input-label">Username:</label></td>
-                                <td><input className="input-field" type="text" name="username" /></td>
-                            </tr>
-                            <tr className="input-row">
-                                <td><label className="input-label">Password:</label></td>
-                                <td><input className="input-field" type="password" name="password" /></td>
-                            </tr>
+                            <tbody>
+                                <tr className="input-row">
+                                    <td><label className="input-label">Username:</label></td>
+                                    <td><input className="input-field" type="text" name="username" /></td>
+                                </tr>
+                                <tr className="input-row">
+                                    <td><label className="input-label">Password:</label></td>
+                                    <td><input className="input-field" type="password" name="password" /></td>
+                                </tr>
+                            </tbody>
                         </table>
 
                         <div className="submit-input">
-                            <input className="login-button" type="submit" value="Login" />
+                            <button className="login-button" onClick={this.state.onSubmit}>Login</button>
                         </div>
                     </div>
                 </div>

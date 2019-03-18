@@ -6,12 +6,13 @@
 .login-dialog {
     position: fixed;
     top: 30%;
-    left: 30%;
+    left: 35%;
     width: 30%;
     height: 40%;
-    border: 5px solid black;
+    border: 5px solid #34495E;
     border-top-right-radius: 25px;
     border-bottom-left-radius: 25px;
+    background-color: black;
 }
 
 .input-container {
