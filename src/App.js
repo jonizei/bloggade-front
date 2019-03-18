@@ -24,7 +24,7 @@ class App extends Component {
     let renderObj = <Login onSubmit={this.onSubmit} />
 
     if(this.state.loggedIn) {
-      renderObj = <p>Logged In</p>;
+      renderObj = <FrontPage />;
     }
 
     return (
