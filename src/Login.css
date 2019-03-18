@@ -1,0 +1,60 @@
+.page-container {
+    height: 100%;
+    width: 100%;
+}
+
+.login-dialog {
+    position: fixed;
+    top: 30%;
+    left: 35%;
+    width: 30%;
+    height: 40%;
+    border: 5px solid #34495E;
+    border-top-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+    background-color: black;
+}
+
+.input-container {
+    width: 80%;
+    height: 50%;
+    margin-left: 10%;
+    margin-top: 10%;
+}
+
+.input-grid {
+    width: 100%;
+    height: 60%;
+}
+
+.input-row {
+    width: 100%;
+}
+
+.input-field {
+    height: 20px;
+}
+
+.input-label {
+    float: right;
+    color:yellow;
+}
+
+.submit-input {
+    width: 100%;
+    height: 20%;
+    margin-top: 10px;
+}
+
+.login-button {
+    float: right;
+    width: 100px;
+    height: 30px;
+}
+
+.login-header {
+    height: 10%;
+    width: 100%;
+    align-content: center;
+    color: yellow;
+}
