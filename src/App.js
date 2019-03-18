@@ -8,7 +8,6 @@ class App extends Component {
   state = {mode : 'browse'};
 
   render() {
-
     let printObj = null;
 
     if(this.state.mode === 'read') {
