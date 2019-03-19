@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './BlogList.css';
 import BlogPost from './BlogPost.js';
+import SearchBar from './SearchBar.js';
 
 class BlogList extends Component {
 
@@ -9,8 +10,10 @@ class BlogList extends Component {
     constructor() {
         super();
         this.fetchBlogPosts = this.fetchBlogPosts.bind(this);
+        this.fetchBlogPostsByKeyword = this.fetchBlogPostsByKeyword.bind(this);
         this.buildBlogPosts = this.buildBlogPosts.bind(this);
         this.onSuccess = this.onSuccess.bind(this);
+        this.onSearchClick = this.onSearchClick.bind(this);
     }
 
     componentDidMount() {
@@ -20,6 +23,12 @@ class BlogList extends Component {
     fetchBlogPosts() {
 
         fetch(this.state.url).then((httpResp) => httpResp.json()).then(this.onSuccess);
+
+    }
+
+    fetchBlogPostsByKeyword(keyword) {
+
+        fetch(this.state.url + '/search?keyword=' + keyword).then((httpResp) => httpResp.json()).then(this.onSuccess);
 
     }
 
@@ -45,10 +54,20 @@ class BlogList extends Component {
         this.setState({posts : array});
     }
 
+    onSearchClick = event => {
+        event.preventDefault();
+
+        this.fetchBlogPostsByKeyword(event.target.value);
+    }
+
     render() {
+
+        let testArr = [<BlogPost />, <BlogPost />];
+
         return(
             <div className="blog-container">
-            {this.state.posts}
+            <SearchBar onSearchClick={this.onSearchClick} />
+            {testArr}
             </div>
         );
     }

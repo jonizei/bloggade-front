@@ -21,7 +21,8 @@ class App extends Component {
 
   render() {
 
-    let renderObj = <Login onSubmit={this.onSubmit} />
+    // let renderObj = <Login onSubmit={this.onSubmit} />
+    let renderObj = <FrontPage />
 
     if(this.state.loggedIn) {
       renderObj = <FrontPage />;
