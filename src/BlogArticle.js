@@ -3,16 +3,28 @@ import './BlogArticle.css';
 
 class BlogArticle extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            title : this.props.title,
+            author : this.props.author,
+            content : this.props.content,
+            changeMode : this.props.changeMode
+        };
+    }
+
     render() {
         return(
-            <div className="blog-article-container">
-                <div className="blog-article">
-                    <div className="blog-article-header blog-text">
-                        <div className="blog-article-title">Article 1</div>
-                        <div className="blog-article-author">Author 1</div>
-                    </div>
-                    <div className="blog-article-content blog-text">Test</div>
+            <div className="blog-article">
+                <div className="action-bar">
+                    <div className="exit-link" id="exit-article" onClick={this.state.changeMode}>Back to browsing</div>
                 </div>
+                <div className="blog-article-header blog-text">
+                    <div className="blog-article-title">{this.state.title}</div>
+                    <div className="blog-article-author">{this.state.author}</div>
+                </div>
+                <div className="blog-article-content blog-text">{this.state.content}</div>
             </div>
         );
     }
