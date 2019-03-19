@@ -1,18 +1,39 @@
 import React, { Component } from 'react';
 import './App.css';
-import BlogList from './BlogList.js';
+import FrontPage from './FrontPage.js';
+import Login from './Login.js';
 
 class App extends Component {
 
+  constructor() {
+    super();
+
+    this.onSubmit = this.onSubmit.bind(this);
+
+    this.state = {loggedIn : false};
+  }
+
+  onSubmit = event => {
+    event.preventDefault();
+
+    this.setState({loggedIn : true});
+  }
+
   render() {
+
+    let renderObj = <Login onSubmit={this.onSubmit} />
+
+    if(this.state.loggedIn) {
+      renderObj = <FrontPage />;
+    }
+
     return (
       <div className="App">
-        <div className="left-sidebar"></div>
-        <BlogList />
-        <div className="right-sidebar"></div>
+        {renderObj}
       </div>
     );
   }
 }
 
 export default App;
+
