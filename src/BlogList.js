@@ -18,8 +18,8 @@ class BlogList extends Component {
 
         this.state = {
             url: 'http://localhost:8080/blogposts',
-            blogObjects : [{id : 1, blogTitle : "Test", userName : "TestUser", blogText : "Content"}],
-            posts : [<BlogPost id={1} onItemClick={this.onItemClick} />],
+            blogObjects : [],
+            posts : [],
             mode : 'browse'
         };
     }
@@ -54,11 +54,9 @@ class BlogList extends Component {
     buildBlogPosts(postArray) {
 
         let array = [];
-        let idCounter = 0;
 
         for(let obj of postArray) {
-            array.push(<BlogPost id={idCounter} title={obj.blogTitle} author={obj.userName} description={obj.blogDescription} onItemClick={this.onItemClick} />);
-            idCounter++;
+            array.push(<BlogPost id={obj.id} title={obj.blogTitle} author={obj.userName} description={obj.blogDescription} onItemClick={this.onItemClick} />);
         }
 
         this.setState({posts : array});
