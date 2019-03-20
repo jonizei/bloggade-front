@@ -48,6 +48,7 @@ class BlogList extends Component {
             array.push(obj);
         }
 
+        this.setState({blogObjects : array});
         this.buildBlogPosts(array);
     }
 
@@ -64,6 +65,8 @@ class BlogList extends Component {
 
     onSearchClick = event => {
         event.preventDefault();
+
+        this.setState({blogObjects : [], posts : []});
 
         this.fetchBlogPostsByKeyword(event.target.value);
     }
