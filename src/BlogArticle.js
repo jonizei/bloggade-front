@@ -18,7 +18,7 @@ class BlogArticle extends Component {
         return(
             <div className="blog-article">
                 <div className="action-bar">
-                    <div className="exit-link" id="exit-article" onClick={this.state.changeMode}>Back to browsing</div>
+                    <div className="exit-link blog-text" id="exit-article" onClick={this.state.changeMode}>Back to browsing</div>
                 </div>
                 <div className="blog-article-header blog-text">
                     <div className="blog-article-title">{this.state.title}</div>

@@ -7,7 +7,6 @@ class App extends Component {
 
   constructor() {
     super();
-
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {loggedIn : false};

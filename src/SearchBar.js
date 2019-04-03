@@ -7,11 +7,20 @@ class SearchBar extends Component {
         super(props);
 
         this.onInputChange = this.onInputChange.bind(this);
+        this.onLoginClick = this.onLoginClick.bind(this);
 
         this.state = {
             keyword : '',
             onSearchClick : this.props.onSearchClick
         };
+    }
+
+    onLoginClick = event => {
+        event.preventDefault();
+
+        if(event.target.value === 'login') {
+            window.location.replace('/api/private/admin/');
+        }
     }
 
     onInputChange = event => {
@@ -22,12 +31,17 @@ class SearchBar extends Component {
 
     render() {
         return(
-            <div className="search-container">
-                <div className="search-input-container">
-                    <input type="text" className="input-search" onChange={this.onInputChange}/>
+            <div className="header-container">
+                <div className="login-button-container">
+                    <button className="login-button-nav" onClick={this.onLoginClick} value="login">Login</button>
                 </div>
-                <div className="search-button-container">
-                    <button className="button-search" onClick={this.state.onSearchClick} value={this.state.keyword}>Search</button>
+                <div className="search-container">
+                    <div className="search-input-container">
+                        <input type="text" className="input-search" onChange={this.onInputChange}/>
+                    </div>
+                    <div className="search-button-container">
+                        <button className="button-search" onClick={this.state.onSearchClick} value={this.state.keyword}>Search</button>
+                    </div>
                 </div>
             </div>
         );

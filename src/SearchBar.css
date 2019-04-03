@@ -1,7 +1,7 @@
-.search-container {
-    display: flex;
+.header-container {
+    display: flexbox;
     width: 70%;
-    height: 5%;
+    height: 10%;
     border: 5px solid #34495E;
     background-color: black;
     border-top-right-radius: 25px;
@@ -9,6 +9,11 @@
     margin-top: 5%;
     margin-left: 12.5%;
     padding: 2.5%;
+}
+
+.search-container {
+    display: flex;
+    width: 100%;
 }
 
 .search-input-container {
@@ -32,3 +37,15 @@
     width: 90%;
     height: 36px;
 }
+
+.login-button-container {
+    width: 100%;
+    height: 30%;
+    padding-top: 1%;
+    margin-bottom: 1%;
+}
+
+.login-button-nav {
+    float: right;
+}
+

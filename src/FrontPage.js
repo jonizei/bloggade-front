@@ -15,8 +15,6 @@ class FrontPage extends Component {
             printObj = <BlogArticle />;
         } else if(this.state.mode === 'browse') {
             printObj = <BlogList />
-        } else if(this.state.mode === 'manage') {
-            printObj = <AdminPage />
         }
 
         return (
