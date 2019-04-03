@@ -19,7 +19,7 @@ class SearchBar extends Component {
         event.preventDefault();
 
         if(event.target.value === 'login') {
-            window.location.replace('/api/private/admin/');
+            window.location.replace('/login');
         }
     }
 
