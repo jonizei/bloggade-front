@@ -9,7 +9,9 @@ class App extends Component {
     super();
     this.onSubmit = this.onSubmit.bind(this);
 
-    this.state = {loggedIn : false};
+    this.state = {
+      loggedIn : false
+    };
   }
 
   onSubmit = event => {
@@ -19,9 +21,16 @@ class App extends Component {
   }
 
   render() {
+
+    let renderObj = <FrontPage />;
+
+    if(this.state.loggedIn) {
+      renderObj = <FrontPage isAdmin={true} />;
+    }
+
     return (
       <div className="App">
-        <FrontPage />
+        {renderObj}
       </div>
     );
   }

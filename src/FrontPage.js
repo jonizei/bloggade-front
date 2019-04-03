@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './FrontPage.css';
 import BlogList from './BlogList.js';
 import BlogArticle from './BlogArticle.js';
-import AdminPage from './AdminPage.js';
 
 class FrontPage extends Component {
 
