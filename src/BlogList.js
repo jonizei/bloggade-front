@@ -130,7 +130,7 @@ class BlogList extends Component {
 
         if(this.state.isAdmin) {
 
-            if(this.state.mode === 'read') {
+            if(this.state.mode === 'read' || this.state.mode === 'create') {
 
                 return(
                     <div className="blog-container">
