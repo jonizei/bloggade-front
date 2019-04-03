@@ -15,6 +15,7 @@ class BlogList extends Component {
         this.onSearchClick = this.onSearchClick.bind(this);
         this.onItemClick = this.onItemClick.bind(this);
         this.changeMode = this.changeMode.bind(this);
+        this.updateBlogList = this.updateBlogList.bind(this);
 
         this.state = {
             url: 'http://localhost:8080/api/public/blogposts',
@@ -26,6 +27,11 @@ class BlogList extends Component {
     }
 
     componentDidMount() {
+        this.updateBlogList();
+    }
+
+    updateBlogList() {
+        this.setState({posts : [], blogObjects : []});
         this.fetchBlogPosts();
     }
 
@@ -58,7 +64,7 @@ class BlogList extends Component {
         let array = [];
 
         for(let obj of postArray) {
-            array.push(<BlogPost isAdmin={this.state.isAdmin} id={obj.id} title={obj.blogTitle} author={obj.userName} description={obj.blogDescription} onItemClick={this.onItemClick} />);
+            array.push(<BlogPost isAdmin={this.state.isAdmin} id={obj.id} title={obj.blogTitle} author={obj.userName} description={obj.blogDescription} onItemClick={this.onItemClick} updatePosts={this.updateBlogList} />);
         }
 
         this.setState({posts : array});
