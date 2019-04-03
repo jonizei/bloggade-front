@@ -6,8 +6,8 @@ import BlogArticle from './BlogArticle';
 
 class BlogList extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.fetchBlogPosts = this.fetchBlogPosts.bind(this);
         this.fetchBlogPostsByKeyword = this.fetchBlogPostsByKeyword.bind(this);
         this.buildBlogPosts = this.buildBlogPosts.bind(this);
@@ -20,7 +20,8 @@ class BlogList extends Component {
             url: 'http://localhost:8080/api/public/blogposts',
             blogObjects : [],
             posts : [],
-            mode : 'browse'
+            mode : 'browse',
+            isAdmin: this.props.isAdmin
         };
     }
 
@@ -57,7 +58,7 @@ class BlogList extends Component {
         let array = [];
 
         for(let obj of postArray) {
-            array.push(<BlogPost id={obj.id} title={obj.blogTitle} author={obj.userName} description={obj.blogDescription} onItemClick={this.onItemClick} />);
+            array.push(<BlogPost isAdmin={this.state.isAdmin} id={obj.id} title={obj.blogTitle} author={obj.userName} description={obj.blogDescription} onItemClick={this.onItemClick} />);
         }
 
         this.setState({posts : array});
@@ -103,6 +104,8 @@ class BlogList extends Component {
     }
 
     render() {
+        console.log('BlogList render()');
+        console.log(this.state.isAdmin);
 
         let renderObj = this.state.posts;
 

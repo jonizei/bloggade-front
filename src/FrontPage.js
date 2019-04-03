@@ -5,15 +5,19 @@ import BlogArticle from './BlogArticle.js';
 
 class FrontPage extends Component {
 
-    state = {mode : 'browse'};
+    constructor(props) {
+        super(props);
+        this.state = {mode : 'browse', isAdmin: this.props.isAdmin};
+    }
 
     render() {
+        console.log('Frontpage render()');
         let printObj = null;
 
         if(this.state.mode === 'read') {
             printObj = <BlogArticle />;
         } else if(this.state.mode === 'browse') {
-            printObj = <BlogList />
+            printObj = <BlogList isAdmin={this.state.isAdmin}/>
         }
 
         return (
