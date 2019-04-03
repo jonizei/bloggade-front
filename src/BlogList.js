@@ -17,7 +17,7 @@ class BlogList extends Component {
         this.changeMode = this.changeMode.bind(this);
 
         this.state = {
-            url: 'http://localhost:8080/blogposts',
+            url: 'http://localhost:8080/api/public/blogposts',
             blogObjects : [],
             posts : [],
             mode : 'browse'
