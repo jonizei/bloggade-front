@@ -12,7 +12,8 @@ class BlogPost extends Component {
             author : this.props.author,
             description : this.props.description,
             comments : 0,
-            onItemClick : this.props.onItemClick
+            onItemClick : this.props.onItemClick,
+            isAdmin: this.props.isAdmin
         };
     }
 
