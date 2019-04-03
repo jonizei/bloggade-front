@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './FrontPage.css';
 import BlogList from './BlogList.js';
 import BlogArticle from './BlogArticle.js';
+import AdminPage from './AdminPage.js';
 
 class FrontPage extends Component {
 
@@ -11,9 +12,11 @@ class FrontPage extends Component {
         let printObj = null;
 
         if(this.state.mode === 'read') {
-        printObj = <BlogArticle />;
+            printObj = <BlogArticle />;
         } else if(this.state.mode === 'browse') {
-        printObj = <BlogList />
+            printObj = <BlogList />
+        } else if(this.state.mode === 'manage') {
+            printObj = <AdminPage />
         }
 
         return (
