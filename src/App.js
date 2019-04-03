@@ -10,7 +10,7 @@ class App extends Component {
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
-      loggedIn : false
+      loggedIn : true
     };
   }
 
@@ -22,7 +22,7 @@ class App extends Component {
 
   render() {
 
-    let renderObj = <FrontPage />;
+    let renderObj = <FrontPage isAdmin={false} />;
 
     if(this.state.loggedIn) {
       renderObj = <FrontPage isAdmin={true} />;
