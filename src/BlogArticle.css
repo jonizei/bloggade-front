@@ -123,3 +123,14 @@
 .blog-article-textarea {
     width: 100%;
 }
+
+.blog-article-description {
+    width: 100%;
+}
+
+.blog-article-textarea-header {
+    font-size: 20px;
+    color: yellow;
+    padding: 10px;
+    padding-left: 5px;
+}
