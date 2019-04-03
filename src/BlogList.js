@@ -98,7 +98,7 @@ class BlogList extends Component {
 
         let clickedPost = this.findBlogPostById(event.target.id);
 
-        this.setState({mode : 'read', article : <BlogArticle title={clickedPost.blogTitle} author={clickedPost.userName} content={clickedPost.blogText} changeMode={this.changeMode} />});
+        this.setState({mode : 'read', article : <BlogArticle isAdmin={this.state.isAdmin} id={clickedPost.id} title={clickedPost.blogTitle} author={clickedPost.userName} description={clickedPost.blogDescription} content={clickedPost.blogText} changeMode={this.changeMode} updatePosts={this.updateBlogList} />});
     }
 
     changeMode = event => {

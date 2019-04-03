@@ -65,6 +65,7 @@
     color: red;
     border-radius: 15px;
     border: 1px solid red;
+    font-weight: bold;
 }
 
 .blog-delete:hover {

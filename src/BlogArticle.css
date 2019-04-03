@@ -36,7 +36,7 @@
 
 .blog-article-title {
     display: inline-block;
-    width: 50%;
+    width: 45%;
     height: 100%;
     margin-left: 5%;
     margin-top: 3%;
@@ -46,12 +46,48 @@
 
 .blog-article-author {
     display: inline-block;
-    width: 50%;
+    width: 45%;
     height: 100%;
     margin-top: 4%;
     margin-right: 5%;
     font-size: 20px;
     text-align: right;
+}
+
+.blog-article-edit {
+    display: inline-block;
+    width: 10%;
+    height: 70%;
+    color: blueviolet;
+    border-radius: 15px;
+    border: 1px solid blueviolet;
+    margin-top: 10px;
+    margin-right: 10px;
+    font-weight: bold;
+    text-shadow: 1px 1px lightblue;
+}
+
+.blog-article-edit:hover {
+    color: black;
+    background-color: blueviolet;
+}
+
+.blog-article-submit {
+    display: inline-block;
+    width: 10%;
+    height: 70%;
+    color: blueviolet;
+    border-radius: 15px;
+    border: 1px solid blueviolet;
+    margin-top: 10px;
+    margin-right: 10px;
+    font-weight: bold;
+    text-shadow: 1px 1px lightblue;
+}
+
+.blog-article-submit:hover {
+    color: black;
+    background-color: blueviolet;
 }
 
 .blog-article-content {
@@ -84,4 +120,8 @@
 
 .exit-link:hover {
     opacity: 0.6;
+}
+
+.blog-article-textarea {
+    width: 100%;
 }
