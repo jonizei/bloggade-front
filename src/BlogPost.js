@@ -22,6 +22,7 @@ class BlogPost extends Component {
                 <div className="blog-header">
                     <div className="blog-title blog-text">{this.state.title}</div>
                     <div className="blog-author blog-text">{this.state.author}</div>
+                    <div className="blog-delete">DEL</div>
                 </div>
                 <div className="blog-content">
                     <div className="blog-description blog-text">{this.state.description}</div>

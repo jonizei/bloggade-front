@@ -34,7 +34,7 @@
 
 .blog-title {
     display: inline-block;
-    width: 50%;
+    width: 45%;
     height: 100%;
     text-align: left;
     margin-top: 2%;
@@ -43,11 +43,25 @@
 
 .blog-author {
     display: inline-block;
-    width: 50%;
+    width: 45%;
     height: 100%;
     text-align: right;
     margin-top: 2%;
     margin-right: 2%;
+}
+
+.blog-delete {
+    display: inline-block;
+    width: 10%;
+    height: 100%;
+    color: red;
+    border-radius: 15px;
+    border: 1px solid red;
+}
+
+.blog-delete:hover {
+    color: black;
+    background-color: red;
 }
 
 .blog-description {
