@@ -64,7 +64,16 @@ class BlogArticle extends Component {
     onTextChange = event => {
         event.preventDefault();
 
-        this.setState({content : event.target.value});
+        if(event.target.name === 'blog-title') {
+            this.setState({title : event.target.value});
+        } else if(event.target.name === 'blog-author') {
+            this.setState({author : event.target.value});
+        } else if(event.target.name === 'blog-content') {
+            this.setState({content : event.target.value});
+        } else if(event.target.name === 'blog-description') {
+            this.setState({description : event.target.value});
+        }
+        
     }
 
     onError(msg) {
@@ -126,8 +135,8 @@ class BlogArticle extends Component {
                 return(
 
                     <div className="blog-article-header blog-text">
-                        <div className="blog-article-title">{this.state.title}</div>
-                        <div className="blog-article-author">{this.state.author}</div>
+                        <div className="blog-article-title"><input type="text" name="blog-title" value={this.state.title} onChange={this.onTextChange} /></div>
+                        <div className="blog-article-author"><input type="text" name="blog-author" value={this.state.author} onChange={this.onTextChange} /></div>
                         <div className="blog-article-submit" onClick={this.onSubmitClick}>SUB<br />MIT</div>
                     </div>
     
@@ -173,9 +182,10 @@ class BlogArticle extends Component {
                     </div>
                     {header}
                     <div className="blog-article-content blog-text">
-                        <textarea className="blog-article-textarea" cols="" rows="30" onChange={this.onTextChange}>
-                            {this.state.content}
-                        </textarea>
+                        <div className="blog-article-textarea-header">Description</div>
+                        <textarea className="blog-article-description" cols="" rows="5" name="blog-description" value={this.state.description} onChange={this.onTextChange}></textarea>
+                        <div className="blog-article-textarea-header">Content</div>
+                        <textarea className="blog-article-textarea" cols="" rows="30" name="blog-content" value={this.state.content} onChange={this.onTextChange}></textarea>
                     </div>
                 </div>
 
