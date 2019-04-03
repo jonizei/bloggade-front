@@ -56,38 +56,36 @@
 
 .blog-article-edit {
     display: inline-block;
-    width: 10%;
+    width: 12%;
     height: 70%;
-    color: blueviolet;
+    color: limegreen;
     border-radius: 15px;
-    border: 1px solid blueviolet;
+    border: 1px solid limegreen;
     margin-top: 10px;
     margin-right: 10px;
     font-weight: bold;
-    text-shadow: 1px 1px lightblue;
 }
 
 .blog-article-edit:hover {
     color: black;
-    background-color: blueviolet;
+    background-color: limegreen;
 }
 
 .blog-article-submit {
     display: inline-block;
-    width: 10%;
+    width: 12%;
     height: 70%;
-    color: blueviolet;
+    color: turquoise;
     border-radius: 15px;
-    border: 1px solid blueviolet;
+    border: 1px solid turquoise;
     margin-top: 10px;
     margin-right: 10px;
     font-weight: bold;
-    text-shadow: 1px 1px lightblue;
 }
 
 .blog-article-submit:hover {
     color: black;
-    background-color: blueviolet;
+    background-color: turquoise;
 }
 
 .blog-article-content {

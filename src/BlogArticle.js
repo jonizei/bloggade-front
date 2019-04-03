@@ -11,18 +11,38 @@ class BlogArticle extends Component {
         this.onSubmitClick = this.onSubmitClick.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.savePostEdit = this.savePostEdit.bind(this);
+        this.createNewPost = this.createNewPost.bind(this);
 
-        this.state = {
-            id : this.props.id,
-            title : this.props.title,
-            author : this.props.author,
-            description : this.props.description,
-            content : this.props.content,
-            changeMode : this.props.changeMode,
-            isAdmin : this.props.isAdmin,
-            isEditing : false,
-            updatePosts : this.props.updatePosts
-        };
+        if(this.props.create) {
+
+            this.state = {
+                id : -1,
+                title : '',
+                author : '',
+                description : '',
+                content : '',
+                changeMode : this.props.changeMode,
+                isAdmin : this.props.isAdmin,
+                isEditing : true,
+                updatePosts : this.props.updatePosts,
+                isCreating : true
+            };
+
+        } else {
+
+            this.state = {
+                id : this.props.id,
+                title : this.props.title,
+                author : this.props.author,
+                description : this.props.description,
+                content : this.props.content,
+                changeMode : this.props.changeMode,
+                isAdmin : this.props.isAdmin,
+                isEditing : false,
+                updatePosts : this.props.updatePosts
+            };
+
+        }
     }
 
     onEditClick = event => {
@@ -34,7 +54,11 @@ class BlogArticle extends Component {
     onSubmitClick = event => {
         event.preventDefault();
 
-        this.savePostEdit();
+        if(this.state.isEditing && this.state.isCreating) {
+            this.createNewPost();
+        } else if(this.state.isEditing && !this.state.isCreating) {
+            this.savePostEdit();
+        }
     }
 
     onTextChange = event => {
@@ -45,6 +69,29 @@ class BlogArticle extends Component {
 
     onError(msg) {
         console.log(msg);
+    }
+
+    createNewPost() {
+
+        let requestObj = {
+            id : this.state.id,
+            userName : this.state.author,
+            blogTitle : this.state.title,
+            blogDescription : this.state.description,
+            blogText : this.state.content
+        };
+
+        fetch('http://localhost:8080/api/private/admin/add', {
+            method: 'POST',
+            headers: {'Content-type' : 'application/json'},
+            body: JSON.stringify(requestObj),
+            dataType: 'json'
+        }).then((httpResp) => {
+            console.log(httpResp);
+            this.state.updatePosts();
+            this.setState({isEditing : false, isCreating : false});
+        }).catch(this.onError);
+
     }
 
     savePostEdit() {

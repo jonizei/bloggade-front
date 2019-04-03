@@ -16,6 +16,7 @@ class BlogList extends Component {
         this.onItemClick = this.onItemClick.bind(this);
         this.changeMode = this.changeMode.bind(this);
         this.updateBlogList = this.updateBlogList.bind(this);
+        this.onCreateClick = this.onCreateClick.bind(this);
 
         this.state = {
             url: 'http://localhost:8080/api/public/blogposts',
@@ -101,6 +102,12 @@ class BlogList extends Component {
         this.setState({mode : 'read', article : <BlogArticle isAdmin={this.state.isAdmin} id={clickedPost.id} title={clickedPost.blogTitle} author={clickedPost.userName} description={clickedPost.blogDescription} content={clickedPost.blogText} changeMode={this.changeMode} updatePosts={this.updateBlogList} />});
     }
 
+    onCreateClick = event => {
+        event.preventDefault();
+
+        this.setState({mode : 'create', article : <BlogArticle isAdmin={this.state.isAdmin} changeMode={this.changeMode} updatePosts={this.updateBlogList} create={true} />});
+    }
+
     changeMode = event => {
         event.preventDefault();
 
@@ -115,8 +122,33 @@ class BlogList extends Component {
 
         let renderObj = this.state.posts;
 
-        if(this.state.mode === 'read') {
+        if(this.state.mode === 'read' || this.state.mode === 'create') {
             renderObj = this.state.article;
+        }
+
+        let actionBar = <div className="blog-list-action-bar" onClick={this.onCreateClick}>CREATE POST</div>;
+
+        if(this.state.isAdmin) {
+
+            if(this.state.mode === 'read') {
+
+                return(
+                    <div className="blog-container">
+                    <SearchBar onSearchClick={this.onSearchClick} />
+                    {renderObj}
+                    </div>
+                );
+
+            }
+
+            return(
+                <div className="blog-container">
+                <SearchBar onSearchClick={this.onSearchClick} />
+                {actionBar}
+                {renderObj}
+                </div>
+            );
+
         }
 
         return(

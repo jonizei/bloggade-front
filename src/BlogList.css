@@ -8,3 +8,24 @@
     align-content: center;
     overflow-x: auto;
   }
+
+  .blog-list-action-bar {
+    width: 70%;
+    height: 5%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    border-radius: 25px;
+    border: 5px solid #34495E;
+    background-color: black;
+    margin-top: 5%;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 20px;
+    font-weight: bold;
+    color: green;
+}
+
+.blog-list-action-bar:hover {
+  color: black;
+  background-color: green;
+}
