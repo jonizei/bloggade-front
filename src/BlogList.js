@@ -56,6 +56,7 @@ class BlogList extends Component {
             array.push(obj);
         }
 
+
         this.setState({blogObjects : array});
         this.buildBlogPosts(array);
     }
@@ -65,7 +66,8 @@ class BlogList extends Component {
         let array = [];
 
         for(let obj of postArray) {
-            array.push(<BlogPost isAdmin={this.state.isAdmin} id={obj.id} title={obj.blogTitle} author={obj.userName} description={obj.blogDescription} onItemClick={this.onItemClick} updatePosts={this.updateBlogList} />);
+            array.push(<BlogPost isAdmin={this.state.isAdmin} id={obj.id} title={obj.blogTitle} author={obj.userName} description={obj.blogDescription} 
+                onItemClick={this.onItemClick} updatePosts={this.updateBlogList} comments={this.comments}/>);
         }
 
         this.setState({posts : array});
@@ -97,9 +99,12 @@ class BlogList extends Component {
     onItemClick = event => {
         event.preventDefault();
 
+
         let clickedPost = this.findBlogPostById(event.target.id);
 
-        this.setState({mode : 'read', article : <BlogArticle isAdmin={this.state.isAdmin} id={clickedPost.id} title={clickedPost.blogTitle} author={clickedPost.userName} description={clickedPost.blogDescription} content={clickedPost.blogText} changeMode={this.changeMode} updatePosts={this.updateBlogList} />});
+        this.setState({mode : 'read', article : <BlogArticle isAdmin={this.state.isAdmin} id={clickedPost.id} title={clickedPost.blogTitle} 
+        author={clickedPost.userName} description={clickedPost.blogDescription} content={clickedPost.blogText} changeMode={this.changeMode} 
+        updatePosts={this.updateBlogList} comments={clickedPost.comments} />});
     }
 
     onCreateClick = event => {

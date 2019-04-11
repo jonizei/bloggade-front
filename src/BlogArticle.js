@@ -1,6 +1,16 @@
 import React, { Component } from 'react';
 import './BlogArticle.css';
 
+class Comments extends Component {
+  render() {
+    let comments = this.props.comments
+    let divComments = comments.map((comment) => {
+      return <div className="blog-article-content blog-text">{comment}</div>
+    })
+    return <div>{divComments}</div>
+  }
+}
+
 class BlogArticle extends Component {
 
     constructor(props) {
@@ -11,7 +21,9 @@ class BlogArticle extends Component {
         this.onSubmitClick = this.onSubmitClick.bind(this);
         this.onTextChange = this.onTextChange.bind(this);
         this.savePostEdit = this.savePostEdit.bind(this);
+        this.saveComment = this.saveComment.bind(this);
         this.createNewPost = this.createNewPost.bind(this);
+        this.addComment = this.addComment.bind(this);
 
         if(this.props.create) {
 
@@ -25,7 +37,8 @@ class BlogArticle extends Component {
                 isAdmin : this.props.isAdmin,
                 isEditing : true,
                 updatePosts : this.props.updatePosts,
-                isCreating : true
+                isCreating : true,
+                blogComment : ''
             };
 
         } else {
@@ -39,7 +52,9 @@ class BlogArticle extends Component {
                 changeMode : this.props.changeMode,
                 isAdmin : this.props.isAdmin,
                 isEditing : false,
-                updatePosts : this.props.updatePosts
+                updatePosts : this.props.updatePosts,
+                comments : this.props.comments,
+                blogComment : ''
             };
 
         }
@@ -61,6 +76,11 @@ class BlogArticle extends Component {
         }
     }
 
+    onPostCommentClick = event => {
+      event.preventDefault();
+      this.saveComment();
+    }
+
     onTextChange = event => {
         event.preventDefault();
 
@@ -72,7 +92,9 @@ class BlogArticle extends Component {
             this.setState({content : event.target.value});
         } else if(event.target.name === 'blog-description') {
             this.setState({description : event.target.value});
-        }
+        } else if(event.target.name === 'blog-comment') {
+          this.setState({blogComment : event.target.value});
+      }
         
     }
 
@@ -126,6 +148,23 @@ class BlogArticle extends Component {
 
     }
 
+    saveComment() {
+      let requestObj = {
+        id: this.state.id,
+        blogComment: this.state.blogComment
+      };
+      console.log(requestObj);
+      fetch('http://localhost:8080/api/private/user/comment', {
+        method: 'POST',
+        headers: {'Content-type' : 'application/json'},
+        body: JSON.stringify(requestObj),
+        dataType: 'json'
+      }).then((httpResp) => {
+        console.log(httpResp);
+        this.state.updatePosts();
+      }).catch(this.onError);
+    }
+
     getHeader() {
 
         if(this.state.isAdmin) {
@@ -168,9 +207,25 @@ class BlogArticle extends Component {
 
     }
 
+    addComment() {
+
+      return (
+        <div>
+          <div className="blog-article-content blog-text">
+            <div className="blog-article-textarea-header">Write a comment
+              <div className="blog-comment-send" onClick={this.onPostCommentClick}>SEND</div>
+            </div>
+            <textarea className="blog-article-comment" cols="" rows="5" name="blog-comment" value={this.state.comment}
+              onChange={this.onTextChange}></textarea>
+          </div>
+        </div>
+      );
+    }
+
     render() {
 
         let header = this.getHeader();
+        let addComment = this.addComment();
 
         if(this.state.isEditing) {
 
@@ -194,6 +249,7 @@ class BlogArticle extends Component {
         } else {
             
             return(
+              <div>
                 <div className="blog-article">
                     <div className="action-bar">
                         <div className="exit-link blog-text" id="exit-article" onClick={this.state.changeMode}>Back to browsing</div>
@@ -201,10 +257,16 @@ class BlogArticle extends Component {
                     {header}
                     <div className="blog-article-content blog-text">{this.state.content}</div>
                 </div>
+                <div>
+                  {addComment}
+                </div>
+                <div>
+                  <Comments comments={this.state.comments}/>
+                </div>
+              </div>
             );
 
         }
-
     }
 
 }
