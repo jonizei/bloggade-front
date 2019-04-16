@@ -3,6 +3,7 @@ import './BlogList.css';
 import BlogPost from './BlogPost.js';
 import SearchBar from './SearchBar.js';
 import BlogArticle from './BlogArticle';
+import Login from './Login';
 
 class BlogList extends Component {
 
@@ -17,13 +18,14 @@ class BlogList extends Component {
         this.changeMode = this.changeMode.bind(this);
         this.updateBlogList = this.updateBlogList.bind(this);
         this.onCreateClick = this.onCreateClick.bind(this);
+        this.getLoginButton = this.getLoginButton.bind(this);
 
         this.state = {
             url: 'http://localhost:8080/api/public/blogposts',
             blogObjects : [],
             posts : [],
             mode : 'browse',
-            isAdmin: this.props.isAdmin
+            userDetails : this.props.userDetails
         };
     }
 
@@ -65,7 +67,7 @@ class BlogList extends Component {
         let array = [];
 
         for(let obj of postArray) {
-            array.push(<BlogPost isAdmin={this.state.isAdmin} id={obj.id} title={obj.blogTitle} author={obj.userName} description={obj.blogDescription} onItemClick={this.onItemClick} updatePosts={this.updateBlogList} />);
+            array.push(<BlogPost userDetails={this.state.userDetails} id={obj.id} title={obj.blogTitle} author={obj.userName} description={obj.blogDescription} onItemClick={this.onItemClick} updatePosts={this.updateBlogList} />);
         }
 
         this.setState({posts : array});
@@ -99,41 +101,72 @@ class BlogList extends Component {
 
         let clickedPost = this.findBlogPostById(event.target.id);
 
-        this.setState({mode : 'read', article : <BlogArticle isAdmin={this.state.isAdmin} id={clickedPost.id} title={clickedPost.blogTitle} author={clickedPost.userName} description={clickedPost.blogDescription} content={clickedPost.blogText} changeMode={this.changeMode} updatePosts={this.updateBlogList} />});
+        this.setState({mode : 'read', article : <BlogArticle userDetails={this.state.userDetails} id={clickedPost.id} title={clickedPost.blogTitle} author={clickedPost.userName} description={clickedPost.blogDescription} content={clickedPost.blogText} changeMode={this.changeMode} updatePosts={this.updateBlogList} />});
     }
 
     onCreateClick = event => {
         event.preventDefault();
 
-        this.setState({mode : 'create', article : <BlogArticle isAdmin={this.state.isAdmin} changeMode={this.changeMode} updatePosts={this.updateBlogList} create={true} />});
+        this.setState({mode : 'create', article : <BlogArticle userDetails={this.state.userDetails} changeMode={this.changeMode} updatePosts={this.updateBlogList} create={true} />});
     }
 
-    changeMode = event => {
-        event.preventDefault();
+    changeMode(action) {
 
-        if(event.target.id === 'exit-article') {
+        if(action === 'exit-article' || action === 'do-login') {
             this.setState({mode : 'browse'});
         }
     }
 
+    goToLogin = event => {
+        event.preventDefault();
+
+        this.setState({mode : 'login'});
+    }
+
+    doLogout = event => {
+        event.preventDefault();
+
+        this.props.loginActions.handleLogout();
+    }
+
+    getLoginButton() {
+
+        let btn = <div className="blog-login-button" onClick={this.goToLogin.bind(this)}>LOG<br />IN</div>;
+
+        if(this.state.userDetails.role === 'ROLE_ADMIN' || this.state.userDetails.role === 'ROLE_USER') {
+            btn = <div className="blog-login-button" onClick={this.doLogout.bind(this)}>LOG<br />OUT</div>;
+        }
+
+        return btn;
+    }
+
     render() {
+
         console.log('BlogList render()');
-        console.log(this.state.isAdmin);
 
         let renderObj = this.state.posts;
 
         if(this.state.mode === 'read' || this.state.mode === 'create') {
             renderObj = this.state.article;
+        } else if(this.state.mode === 'login') {
+            return(
+                <div className='blog-container'>
+                    <Login onLogin={this.props.loginActions.tryLogin} changeMode={this.changeMode} />
+                </div>
+            );
         }
 
         let actionBar = <div className="blog-list-action-bar" onClick={this.onCreateClick}>CREATE POST</div>;
 
-        if(this.state.isAdmin) {
+        if(this.state.userDetails.role === 'ROLE_ADMIN') {
 
             if(this.state.mode === 'read' || this.state.mode === 'create') {
 
                 return(
                     <div className="blog-container">
+                    <div className="blog-login-button-container">
+                        {this.getLoginButton()}
+                    </div>
                     <SearchBar onSearchClick={this.onSearchClick} />
                     {renderObj}
                     </div>
@@ -143,6 +176,9 @@ class BlogList extends Component {
 
             return(
                 <div className="blog-container">
+                <div className="blog-login-button-container">
+                    {this.getLoginButton()}
+                </div>
                 <SearchBar onSearchClick={this.onSearchClick} />
                 {actionBar}
                 {renderObj}
@@ -153,6 +189,9 @@ class BlogList extends Component {
 
         return(
             <div className="blog-container">
+            <div className="blog-login-button-container">
+                {this.getLoginButton()}
+            </div>
             <SearchBar onSearchClick={this.onSearchClick} />
             {renderObj}
             </div>

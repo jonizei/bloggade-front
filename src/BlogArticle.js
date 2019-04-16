@@ -22,7 +22,7 @@ class BlogArticle extends Component {
                 description : '',
                 content : '',
                 changeMode : this.props.changeMode,
-                isAdmin : this.props.isAdmin,
+                userDetails : this.props.userDetails,
                 isEditing : true,
                 updatePosts : this.props.updatePosts,
                 isCreating : true
@@ -37,7 +37,7 @@ class BlogArticle extends Component {
                 description : this.props.description,
                 content : this.props.content,
                 changeMode : this.props.changeMode,
-                isAdmin : this.props.isAdmin,
+                userDetails : this.props.userDetails,
                 isEditing : false,
                 updatePosts : this.props.updatePosts
             };
@@ -128,7 +128,7 @@ class BlogArticle extends Component {
 
     getHeader() {
 
-        if(this.state.isAdmin) {
+        if(this.state.userDetails.role === 'ROLE_ADMIN') {
 
             if(this.state.isEditing) {
 
@@ -178,7 +178,7 @@ class BlogArticle extends Component {
 
                 <div className="blog-article">
                     <div className="action-bar">
-                        <div className="exit-link blog-text" id="exit-article" onClick={this.state.changeMode}>Back to browsing</div>
+                        <div className="exit-link blog-text" onClick={() => this.state.changeMode('exit-article')}>Back to browsing</div>
                     </div>
                     {header}
                     <div className="blog-article-content blog-text">
@@ -196,7 +196,7 @@ class BlogArticle extends Component {
             return(
                 <div className="blog-article">
                     <div className="action-bar">
-                        <div className="exit-link blog-text" id="exit-article" onClick={this.state.changeMode}>Back to browsing</div>
+                        <div className="exit-link blog-text" onClick={() => this.state.changeMode('exit-article')}>Back to browsing</div>
                     </div>
                     {header}
                     <div className="blog-article-content blog-text">{this.state.content}</div>

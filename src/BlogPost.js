@@ -17,7 +17,7 @@ class BlogPost extends Component {
             description : this.props.description,
             comments : 0,
             onItemClick : this.props.onItemClick,
-            isAdmin: this.props.isAdmin
+            userDetails : this.props.userDetails
         };
     }
 
@@ -43,7 +43,7 @@ class BlogPost extends Component {
 
     getHeader() {
 
-        if(this.state.isAdmin) {
+        if(this.state.userDetails.role === 'ROLE_ADMIN') {
 
             return(
                 <div className="blog-header">

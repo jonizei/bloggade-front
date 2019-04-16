@@ -6,9 +6,37 @@ class Login extends Component {
     constructor(props) {
         super(props);
 
+        this.onSubmit = this.onSubmit.bind(this);
+        this.onError = this.onError.bind(this);
+
         this.state = {
-            onSubmit : this.props.onSubmit
+            username: '',
+            password: ''
         }
+    }
+
+    handleChange = event => {
+        event.preventDefault();
+
+        if(event.target.name === 'username') {
+            this.setState({username : event.target.value});
+        } else if(event.target.name === 'password') {
+            this.setState({password : event.target.value});
+        }
+    }
+
+    onSubmit = event => {
+        event.preventDefault();
+
+        if(this.props.changeMode !== undefined) {
+            this.props.changeMode('do-login');
+        }
+
+        this.props.onLogin(this.state.username, this.state.password);
+    }
+
+    onError(msg) {
+        console.log(msg);
     }
 
     render() {
@@ -26,17 +54,17 @@ class Login extends Component {
                             <tbody>
                                 <tr className="input-row">
                                     <td><label className="input-label">Username:</label></td>
-                                    <td><input className="input-field" type="text" name="username" /></td>
+                                    <td><input className="input-field" type="text" name="username" onChange={this.handleChange} value={this.state.username} /></td>
                                 </tr>
                                 <tr className="input-row">
                                     <td><label className="input-label">Password:</label></td>
-                                    <td><input className="input-field" type="password" name="password" /></td>
+                                    <td><input className="input-field" type="password" name="password" onChange={this.handleChange} value={this.state.password} /></td>
                                 </tr>
                             </tbody>
                         </table>
 
                         <div className="submit-input">
-                            <button className="login-button" onClick={this.state.onSubmit}>Login</button>
+                            <button className="login-button" onClick={this.onSubmit}>Login</button>
                         </div>
                     </div>
                 </div>
