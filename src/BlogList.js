@@ -17,13 +17,15 @@ class BlogList extends Component {
         this.changeMode = this.changeMode.bind(this);
         this.updateBlogList = this.updateBlogList.bind(this);
         this.onCreateClick = this.onCreateClick.bind(this);
+        this.findCommentsByBlogPostId = this.findCommentsByBlogPostId.bind(this);
 
         this.state = {
             url: 'http://localhost:8080/api/public/blogposts',
             blogObjects : [],
             posts : [],
             mode : 'browse',
-            isAdmin: this.props.isAdmin
+            isAdmin: this.props.isAdmin,
+            isLoading: false
         };
     }
 
@@ -32,12 +34,11 @@ class BlogList extends Component {
     }
 
     updateBlogList() {
-        this.setState({posts : [], blogObjects : []});
+        this.setState({posts : [], blogObjects : [], isLoading: true});
         this.fetchBlogPosts();
     }
 
     fetchBlogPosts() {
-
         fetch(this.state.url).then((httpResp) => httpResp.json()).then(this.onSuccess);
 
     }
@@ -49,7 +50,9 @@ class BlogList extends Component {
     }
 
     onSuccess(jsonObject) {
-            
+        
+        console.log(jsonObject);
+
         let array = [];
         
         for(let obj of jsonObject) {
@@ -57,11 +60,12 @@ class BlogList extends Component {
         }
 
 
-        this.setState({blogObjects : array});
+        //this.setState({blogObjects : array, isLoading: false});
         this.buildBlogPosts(array);
     }
 
     buildBlogPosts(postArray) {
+        console.log('buildBlogPosts');
 
         let array = [];
 
@@ -70,7 +74,7 @@ class BlogList extends Component {
                 onItemClick={this.onItemClick} updatePosts={this.updateBlogList} comments={this.comments}/>);
         }
 
-        this.setState({posts : array});
+        this.setState({posts : array, blogObjects : postArray, isLoading: false});
     }
 
     onSearchClick = event => {
@@ -87,6 +91,10 @@ class BlogList extends Component {
 
         id = parseInt(id);
 
+        console.log('id: ' + id);
+        console.log(this.state.blogObjects);
+        console.log(this.state.isLoading);
+
         for(let b of this.state.blogObjects) {
             if(b.id === id) {
                 foundPost = b;
@@ -94,6 +102,13 @@ class BlogList extends Component {
         }
 
         return foundPost;
+    }
+
+    findCommentsByBlogPostId(id) {
+        console.log('findCommentsByBlogPostId: ' + id);
+        let blogPost = this.findBlogPostById(id);
+        console.log(blogPost);
+        return blogPost.comments;
     }
 
     onItemClick = event => {
@@ -104,7 +119,7 @@ class BlogList extends Component {
 
         this.setState({mode : 'read', article : <BlogArticle isAdmin={this.state.isAdmin} id={clickedPost.id} title={clickedPost.blogTitle} 
         author={clickedPost.userName} description={clickedPost.blogDescription} content={clickedPost.blogText} changeMode={this.changeMode} 
-        updatePosts={this.updateBlogList} comments={clickedPost.comments} />});
+        updatePosts={this.updateBlogList} findCommentsByBlogPostId={this.findCommentsByBlogPostId}/>});
     }
 
     onCreateClick = event => {
@@ -123,23 +138,33 @@ class BlogList extends Component {
 
     render() {
         console.log('BlogList render()');
-        console.log(this.state.isAdmin);
-
-        let renderObj = this.state.posts;
-
-        if(this.state.mode === 'read' || this.state.mode === 'create') {
-            renderObj = this.state.article;
-        }
-
-        let actionBar = <div className="blog-list-action-bar" onClick={this.onCreateClick}>CREATE POST</div>;
-
-        if(this.state.isAdmin) {
+        if(!this.state.isLoading) {
+                
+            let renderObj = this.state.posts;
 
             if(this.state.mode === 'read' || this.state.mode === 'create') {
+                renderObj = this.state.article;
+            }
+
+            let actionBar = <div className="blog-list-action-bar" onClick={this.onCreateClick}>CREATE POST</div>;
+
+            if(this.state.isAdmin) {
+
+                if(this.state.mode === 'read' || this.state.mode === 'create') {
+
+                    return(
+                        <div className="blog-container">
+                        <SearchBar onSearchClick={this.onSearchClick} />
+                        {renderObj}
+                        </div>
+                    );
+
+                }
 
                 return(
                     <div className="blog-container">
                     <SearchBar onSearchClick={this.onSearchClick} />
+                    {actionBar}
                     {renderObj}
                     </div>
                 );
@@ -149,19 +174,12 @@ class BlogList extends Component {
             return(
                 <div className="blog-container">
                 <SearchBar onSearchClick={this.onSearchClick} />
-                {actionBar}
                 {renderObj}
                 </div>
             );
-
+        } else {
+            return <div>Loading...</div>
         }
-
-        return(
-            <div className="blog-container">
-            <SearchBar onSearchClick={this.onSearchClick} />
-            {renderObj}
-            </div>
-        );
     }
 
 }

@@ -3,9 +3,10 @@ import './BlogArticle.css';
 
 class Comments extends Component {
   render() {
+    console.log('Comments');
     let comments = this.props.comments
     let divComments = comments.map((comment) => {
-      return <div className="blog-article-content blog-text">{comment}</div>
+      return <div className="blog-article-content blog-text">{comment.text}</div>
     })
     return <div>{divComments}</div>
   }
@@ -53,7 +54,6 @@ class BlogArticle extends Component {
                 isAdmin : this.props.isAdmin,
                 isEditing : false,
                 updatePosts : this.props.updatePosts,
-                comments : this.props.comments,
                 blogComment : ''
             };
 
@@ -118,7 +118,6 @@ class BlogArticle extends Component {
             body: JSON.stringify(requestObj),
             dataType: 'json'
         }).then((httpResp) => {
-            console.log(httpResp);
             this.state.updatePosts();
             this.setState({isEditing : false, isCreating : false});
         }).catch(this.onError);
@@ -141,7 +140,6 @@ class BlogArticle extends Component {
             body: JSON.stringify(requestObj),
             dataType: 'json'
         }).then((httpResp) => {
-            console.log(httpResp);
             this.state.updatePosts();
             this.setState({isEditing : false});
         }).catch(this.onError);
@@ -151,17 +149,16 @@ class BlogArticle extends Component {
     saveComment() {
       let requestObj = {
         id: this.state.id,
-        blogComment: this.state.blogComment
+        text: this.state.blogComment
       };
-      console.log(requestObj);
-      fetch('http://localhost:8080/api/private/user/comment', {
+      fetch('http://localhost:8080/api/public/comment', {
         method: 'POST',
         headers: {'Content-type' : 'application/json'},
         body: JSON.stringify(requestObj),
         dataType: 'json'
       }).then((httpResp) => {
-        console.log(httpResp);
         this.state.updatePosts();
+        this.setState({blogComment: ''});
       }).catch(this.onError);
     }
 
@@ -215,7 +212,7 @@ class BlogArticle extends Component {
             <div className="blog-article-textarea-header">Write a comment
               <div className="blog-comment-send" onClick={this.onPostCommentClick}>SEND</div>
             </div>
-            <textarea className="blog-article-comment" cols="" rows="5" name="blog-comment" value={this.state.comment}
+            <textarea className="blog-article-comment" cols="" rows="5" name="blog-comment" value={this.state.blogComment}
               onChange={this.onTextChange}></textarea>
           </div>
         </div>
@@ -223,6 +220,9 @@ class BlogArticle extends Component {
     }
 
     render() {
+        console.log('BlogArticle render()');
+
+        let tempComments = this.props.findCommentsByBlogPostId(this.state.id);
 
         let header = this.getHeader();
         let addComment = this.addComment();
@@ -261,7 +261,7 @@ class BlogArticle extends Component {
                   {addComment}
                 </div>
                 <div>
-                  <Comments comments={this.state.comments}/>
+                  <Comments comments={tempComments}/>
                 </div>
               </div>
             );
