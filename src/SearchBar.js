@@ -14,6 +14,17 @@ class SearchBar extends Component {
         };
     }
 
+<<<<<<< HEAD
+=======
+    onLoginClick = event => {
+        event.preventDefault();
+
+        if(event.target.value === 'login') {
+            window.location.replace('/login');
+        }
+    }
+
+>>>>>>> 60cf76f1e35ba9ea7e1d1920fa24dfaf129f15e5
     onInputChange = event => {
         event.preventDefault();
 
