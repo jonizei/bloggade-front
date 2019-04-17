@@ -114,7 +114,10 @@ class BlogArticle extends Component {
 
         fetch('http://localhost:8080/api/private/admin/add', {
             method: 'POST',
-            headers: {'Content-type' : 'application/json'},
+            headers: {
+              Authorization: `Bearer ${this.state.userDetails.token}`,
+              'Content-type' : 'application/json'
+            },
             body: JSON.stringify(requestObj),
             dataType: 'json'
         }).then((httpResp) => {
@@ -136,7 +139,10 @@ class BlogArticle extends Component {
 
         fetch('http://localhost:8080/api/private/admin/edit', {
             method: 'PUT',
-            headers: {'Content-type' : 'application/json'},
+            headers: {
+              Authorization: `Bearer ${this.state.userDetails.token}`,
+              'Content-type' : 'application/json'
+            },
             body: JSON.stringify(requestObj),
             dataType: 'json'
         }).then((httpResp) => {
@@ -147,13 +153,18 @@ class BlogArticle extends Component {
     }
 
     saveComment() {
+      console.log('Token: ' + this.state.userDetails.token);
+
       let requestObj = {
         id: this.state.id,
         text: this.state.blogComment
       };
-      fetch('http://localhost:8080/api/public/comment', {
+      fetch('http://localhost:8080/api/private/user/comment', {
         method: 'POST',
-        headers: {'Content-type' : 'application/json'},
+        headers: {
+            Authorization: `Bearer ${this.state.userDetails.token}`,
+            'Content-type' : 'application/json'
+        },
         body: JSON.stringify(requestObj),
         dataType: 'json'
       }).then((httpResp) => {

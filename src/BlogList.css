@@ -30,7 +30,7 @@
   background-color: green;
 }
 
-.blog-login-button-container {
+.blog-action-button-container {
   width: 90%;
   height: 7%;
   padding: 10px;
@@ -48,6 +48,21 @@
 }
 
 .blog-login-button:hover {
+  color: black;
+  background-color: rgb(233, 120, 233);
+}
+
+.blog-sign-up-button {
+  float: right;
+  width: 10%;
+  height: 100%;
+  border: 1px solid rgb(233, 120, 233);
+  border-radius: 15px;
+  font-weight: bold;
+  color: rgb(233, 120, 233);
+}
+
+.blog-sign-up-button:hover {
   color: black;
   background-color: rgb(233, 120, 233);
 }

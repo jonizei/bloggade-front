@@ -8,7 +8,8 @@ class App extends Component {
   anonUser = {
     roles: [
       'ANYNOMOUS'
-    ]
+    ],
+    token: ''
   }
 
   constructor() {
@@ -16,6 +17,7 @@ class App extends Component {
     this.handleLogin = this.handleLogin.bind(this);
     this.tryLogin = this.tryLogin.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    this.trySignUp = this.trySignUp.bind(this);
 
     this.state = {
       loggedIn : true,
@@ -23,13 +25,18 @@ class App extends Component {
       userDetails: {},
       loginActions: {
         tryLogin: this.tryLogin,
-        handleLogout: this.handleLogout
+        handleLogout: this.handleLogout,
+        trySignUp: this.trySignUp
       } 
     };
   }
 
   componentDidMount() {
-    this.handleLogin();
+    let jwt = localStorage.getItem('accessToken');
+
+    if(jwt) {
+      this.handleLogin();
+    }
   }
 
   tryLogin(username, password) {
@@ -65,6 +72,7 @@ class App extends Component {
       }
     }).then((httpResp) => httpResp.json())
         .then((jsonObject) => {
+          jsonObject.user.token = jwt;
           this.setState({loggedIn: true, userDetails: jsonObject.user, isLoading : false});
         })
         .catch((msg) => {
@@ -79,6 +87,28 @@ class App extends Component {
     this.setState({loggedIn: false, userDetails: this.anonUser}, () => {
       localStorage.removeItem('accessToken');
       this.handleLogin();
+    });
+
+  }
+
+  trySignUp(username, password) {
+
+    let newUser = {
+      userName: username,
+      password: password
+    }
+
+    fetch('http://localhost:8080/api/auth/register', {
+      method: 'POST',
+      credentials: 'include',
+      headers: {'Content-type': 'application/json'},
+      body: JSON.stringify(newUser),
+      dataType: 'json'
+    }).then((httpResp) => {
+      console.log(httpResp);
+      this.tryLogin(username, password);
+    }).catch((msg) => {
+      console.log(msg);
     });
 
   }

@@ -4,6 +4,7 @@ import BlogPost from './BlogPost.js';
 import SearchBar from './SearchBar.js';
 import BlogArticle from './BlogArticle';
 import Login from './Login';
+import SignUp from './SignUp';
 
 class BlogList extends Component {
 
@@ -155,6 +156,12 @@ class BlogList extends Component {
         return btn;
     }
 
+    goToSignUp = event => {
+        event.preventDefault();
+
+        this.setState({mode: 'sign-up'});
+    }
+
     render() {
 
         console.log('BlogList render()');
@@ -171,9 +178,15 @@ class BlogList extends Component {
                     <Login onLogin={this.props.loginActions.tryLogin} changeMode={this.changeMode} />
                 </div>
             );
+        } else if(this.state.mode === 'sign-up') {
+            return(
+                <div className='blog-container'>
+                    <SignUp onSignUp={this.props.loginActions.trySignUp} />
+                </div>
+            );
         }
 
-            let actionBar = <div className="blog-list-action-bar" onClick={this.onCreateClick}>CREATE POST</div>;
+        let actionBar = <div className="blog-list-action-bar" onClick={this.onCreateClick}>CREATE POST</div>;
 
         if(this.state.userDetails.role === 'ROLE_ADMIN') {
 
@@ -181,6 +194,9 @@ class BlogList extends Component {
 
                     return(
                         <div className="blog-container">
+                        <div className="blog-action-button-container">
+                            {this.getLoginButton()}
+                        </div>
                         <SearchBar onSearchClick={this.onSearchClick} />
                         {renderObj}
                         </div>
@@ -190,7 +206,7 @@ class BlogList extends Component {
 
                 return(
                     <div className="blog-container">
-                    <div className="blog-login-button-container">
+                    <div className="blog-action-button-container">
                         {this.getLoginButton()}
                     </div>
                     <SearchBar onSearchClick={this.onSearchClick} />
@@ -199,12 +215,23 @@ class BlogList extends Component {
                     </div>
                 );
 
+            } else if(this.state.userDetails.role === 'ROLE_USER') {
+                return(
+                    <div className="blog-container">
+                    <div className="blog-action-button-container">
+                        {this.getLoginButton()}
+                    </div>
+                    <SearchBar onSearchClick={this.onSearchClick} />
+                    {renderObj}
+                    </div>
+                );
             }
 
             return(
                 <div className="blog-container">
-                <div className="blog-login-button-container">
+                <div className="blog-action-button-container">
                     {this.getLoginButton()}
+                    <div className="blog-sign-up-button" onClick={this.goToSignUp.bind(this)}>SIGN<br />UP</div>
                 </div>
                 <SearchBar onSearchClick={this.onSearchClick} />
                 {renderObj}
