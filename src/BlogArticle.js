@@ -151,7 +151,7 @@ class BlogArticle extends Component {
         id: this.state.id,
         text: this.state.blogComment
       };
-      fetch('http://localhost:8080/api/public/comment', {
+      fetch('http://localhost:8080/api/private/user/comment', {
         method: 'POST',
         headers: {'Content-type' : 'application/json'},
         body: JSON.stringify(requestObj),
