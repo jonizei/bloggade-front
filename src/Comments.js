@@ -22,7 +22,10 @@ class Comments extends Component {
 
     deleteComment(id) {
         fetch('http://localhost:8080/api/private/admin/delete/comment/' + id, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                Authorization: `Bearer ${this.state.userDetails.token}`
+            }
         }).then((httpResp) => {
             this.state.updatePosts();
         }).catch(this.onError);
