@@ -196,17 +196,22 @@ class BlogArticle extends Component {
 
     addComment() {
 
-      return (
-        <div>
-          <div className="blog-article-content blog-text">
-            <div className="blog-article-textarea-header">Write a comment
-              <div className="blog-comment-send" onClick={this.onPostCommentClick}>SEND</div>
-            </div>
-            <textarea className="blog-article-comment" cols="" rows="5" name="blog-comment" value={this.state.blogComment}
-              onChange={this.onTextChange}></textarea>
-          </div>
-        </div>
-      );
+        if (this.state.userDetails.role === 'ROLE_USER' || this.state.userDetails.role === 'ROLE_ADMIN') {
+            return (
+                <div>
+                  <div className="blog-article-content blog-text">
+                    <div className="blog-article-textarea-header">Write a comment
+                      <div className="blog-comment-send" onClick={this.onPostCommentClick}>SEND</div>
+                    </div>
+                    <textarea className="blog-article-comment" cols="" rows="5" name="blog-comment" value={this.state.blogComment}
+                      onChange={this.onTextChange}></textarea>
+                  </div>
+                </div>
+              );
+        }
+
+        return <div>Login to comment</div>
+
     }
 
     render() {
@@ -251,7 +256,7 @@ class BlogArticle extends Component {
                   {addComment}
                 </div>
                 <div>
-                  <Comments comments={tempComments} updatePosts={this.state.updatePosts} />
+                  <Comments comments={tempComments} updatePosts={this.state.updatePosts} userDetails={this.state.userDetails}/>
                 </div>
               </div>
             );

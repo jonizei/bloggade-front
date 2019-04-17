@@ -10,7 +10,8 @@ class Comments extends Component {
 
         this.state = {
             comments: this.props.comments,
-            updatePosts: this.props.updatePosts
+            updatePosts: this.props.updatePosts,
+            userDetails: this.props.userDetails
         }
     }
 
@@ -34,11 +35,23 @@ class Comments extends Component {
     render() {
         console.log('Comments');
         let comments = this.state.comments
-        let divComments = comments.map((comment) => {
-        return  <div className="blog-article-content blog-text">{comment.text}
-                    <div className="blog-delete" onClick={this.onDeleteClick} id={comment.id} >DEL</div>
-                </div>
-        })
+        let divComments;
+
+        if (this.state.userDetails.role === 'ROLE_ADMIN') {
+            divComments = comments.map((comment) => {
+                return  <div className="blog-article-content blog-text">{comment.text}
+                            <div className="blog-delete" onClick={this.onDeleteClick} id={comment.id} >DEL</div>
+                        </div>
+                })
+        } else {
+            divComments = comments.map((comment) => {
+                return  <div className="blog-article-content blog-text">{comment.text}
+                        </div>
+                })
+        }
+
+
+   
         return <div>{divComments}</div>
     }
 }
