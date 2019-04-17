@@ -70,7 +70,7 @@
     color: black;
     background-color: limegreen;
 }
-
+.blog-comment-send,
 .blog-article-submit {
     display: inline-block;
     width: 12%;
@@ -83,6 +83,7 @@
     font-weight: bold;
 }
 
+.blog-comment-send:hover,
 .blog-article-submit:hover {
     color: black;
     background-color: turquoise;
@@ -123,7 +124,7 @@
 .blog-article-textarea {
     width: 100%;
 }
-
+.blog-article-comment,
 .blog-article-description {
     width: 100%;
 }

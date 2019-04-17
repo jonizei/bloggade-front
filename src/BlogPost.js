@@ -15,7 +15,7 @@ class BlogPost extends Component {
             title : this.props.title,
             author : this.props.author,
             description : this.props.description,
-            comments : 0,
+            commentsLength : this.props.commentsLength,
             onItemClick : this.props.onItemClick,
             userDetails : this.props.userDetails
         };
@@ -65,6 +65,7 @@ class BlogPost extends Component {
     }
 
     render() {
+        console.log('BlogPost render');
 
         let header = this.getHeader();
 
@@ -78,7 +79,7 @@ class BlogPost extends Component {
                     </div>
                 </div>
                 <div className="blog-footer">
-                    <div className="blog-comments blog-text">Comments: {this.state.comments}</div>
+                    <div className="blog-comments blog-text">Comments: {this.state.commentsLength}</div>
                 </div>
             </div>
         );

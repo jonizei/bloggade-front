@@ -19,13 +19,15 @@ class BlogList extends Component {
         this.updateBlogList = this.updateBlogList.bind(this);
         this.onCreateClick = this.onCreateClick.bind(this);
         this.getLoginButton = this.getLoginButton.bind(this);
+        this.findCommentsByBlogPostId = this.findCommentsByBlogPostId.bind(this);
 
         this.state = {
             url: 'http://localhost:8080/api/public/blogposts',
             blogObjects : [],
             posts : [],
             mode : 'browse',
-            userDetails : this.props.userDetails
+            userDetails : this.props.userDetails,
+            isLoading: false
         };
     }
 
@@ -34,12 +36,11 @@ class BlogList extends Component {
     }
 
     updateBlogList() {
-        this.setState({posts : [], blogObjects : []});
+        this.setState({posts : [], blogObjects : [], isLoading: true});
         this.fetchBlogPosts();
     }
 
     fetchBlogPosts() {
-
         fetch(this.state.url).then((httpResp) => httpResp.json()).then(this.onSuccess);
 
     }
@@ -51,26 +52,30 @@ class BlogList extends Component {
     }
 
     onSuccess(jsonObject) {
-            
+        
+        console.log(jsonObject);
+
         let array = [];
         
         for(let obj of jsonObject) {
             array.push(obj);
         }
 
-        this.setState({blogObjects : array});
+
+        //this.setState({blogObjects : array, isLoading: false});
         this.buildBlogPosts(array);
     }
 
     buildBlogPosts(postArray) {
+        console.log('buildBlogPosts');
 
         let array = [];
 
         for(let obj of postArray) {
-            array.push(<BlogPost userDetails={this.state.userDetails} id={obj.id} title={obj.blogTitle} author={obj.userName} description={obj.blogDescription} onItemClick={this.onItemClick} updatePosts={this.updateBlogList} />);
+            array.push(<BlogPost userDetails={this.state.userDetails} id={obj.id} title={obj.blogTitle} author={obj.userName} description={obj.blogDescription} onItemClick={this.onItemClick} updatePosts={this.updateBlogList} commentsLength={obj.comments.length} />);
         }
 
-        this.setState({posts : array});
+        this.setState({posts : array, blogObjects : postArray, isLoading: false});
     }
 
     onSearchClick = event => {
@@ -96,12 +101,22 @@ class BlogList extends Component {
         return foundPost;
     }
 
+    findCommentsByBlogPostId(id) {
+        console.log('findCommentsByBlogPostId: ' + id);
+        let blogPost = this.findBlogPostById(id);
+        console.log(blogPost);
+        return blogPost.comments;
+    }
+
     onItemClick = event => {
         event.preventDefault();
 
+
         let clickedPost = this.findBlogPostById(event.target.id);
 
-        this.setState({mode : 'read', article : <BlogArticle userDetails={this.state.userDetails} id={clickedPost.id} title={clickedPost.blogTitle} author={clickedPost.userName} description={clickedPost.blogDescription} content={clickedPost.blogText} changeMode={this.changeMode} updatePosts={this.updateBlogList} />});
+        this.setState({mode : 'read', article : <BlogArticle userDetails={this.state.userDetails} id={clickedPost.id} title={clickedPost.blogTitle} 
+        author={clickedPost.userName} description={clickedPost.blogDescription} content={clickedPost.blogText} changeMode={this.changeMode} 
+        updatePosts={this.updateBlogList} findCommentsByBlogPostId={this.findCommentsByBlogPostId}/>});
     }
 
     onCreateClick = event => {
@@ -144,7 +159,9 @@ class BlogList extends Component {
 
         console.log('BlogList render()');
 
-        let renderObj = this.state.posts;
+        if(!this.state.isLoading) {
+                
+            let renderObj = this.state.posts;
 
         if(this.state.mode === 'read' || this.state.mode === 'create') {
             renderObj = this.state.article;
@@ -156,11 +173,20 @@ class BlogList extends Component {
             );
         }
 
-        let actionBar = <div className="blog-list-action-bar" onClick={this.onCreateClick}>CREATE POST</div>;
+            let actionBar = <div className="blog-list-action-bar" onClick={this.onCreateClick}>CREATE POST</div>;
 
         if(this.state.userDetails.role === 'ROLE_ADMIN') {
 
-            if(this.state.mode === 'read' || this.state.mode === 'create') {
+                if(this.state.mode === 'read' || this.state.mode === 'create') {
+
+                    return(
+                        <div className="blog-container">
+                        <SearchBar onSearchClick={this.onSearchClick} />
+                        {renderObj}
+                        </div>
+                    );
+
+                }
 
                 return(
                     <div className="blog-container">
@@ -168,6 +194,7 @@ class BlogList extends Component {
                         {this.getLoginButton()}
                     </div>
                     <SearchBar onSearchClick={this.onSearchClick} />
+                    {actionBar}
                     {renderObj}
                     </div>
                 );
@@ -180,22 +207,12 @@ class BlogList extends Component {
                     {this.getLoginButton()}
                 </div>
                 <SearchBar onSearchClick={this.onSearchClick} />
-                {actionBar}
                 {renderObj}
                 </div>
             );
-
+        } else {
+            return <div>Loading...</div>
         }
-
-        return(
-            <div className="blog-container">
-            <div className="blog-login-button-container">
-                {this.getLoginButton()}
-            </div>
-            <SearchBar onSearchClick={this.onSearchClick} />
-            {renderObj}
-            </div>
-        );
     }
 
 }
