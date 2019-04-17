@@ -71,7 +71,7 @@ class BlogList extends Component {
 
         for(let obj of postArray) {
             array.push(<BlogPost isAdmin={this.state.isAdmin} id={obj.id} title={obj.blogTitle} author={obj.userName} description={obj.blogDescription} 
-                onItemClick={this.onItemClick} updatePosts={this.updateBlogList} comments={this.comments}/>);
+                onItemClick={this.onItemClick} updatePosts={this.updateBlogList} commentsLength={obj.comments.length}/>);
         }
 
         this.setState({posts : array, blogObjects : postArray, isLoading: false});
@@ -90,10 +90,6 @@ class BlogList extends Component {
         let foundPost = null;
 
         id = parseInt(id);
-
-        console.log('id: ' + id);
-        console.log(this.state.blogObjects);
-        console.log(this.state.isLoading);
 
         for(let b of this.state.blogObjects) {
             if(b.id === id) {
@@ -138,6 +134,7 @@ class BlogList extends Component {
 
     render() {
         console.log('BlogList render()');
+
         if(!this.state.isLoading) {
                 
             let renderObj = this.state.posts;
