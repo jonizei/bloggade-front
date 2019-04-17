@@ -34,7 +34,10 @@ class BlogPost extends Component {
     deletePost() {
 
         fetch('http://localhost:8080/api/private/admin/delete/' + this.state.id, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                Authorization: `Bearer ${this.state.userDetails.token}`
+            }
         }).then((httpResp) => {
             this.props.updatePosts();
         }).catch(this.onError);
