@@ -103,7 +103,11 @@ class BlogList extends Component {
 
     findCommentsByBlogPostId(id) {
         console.log('findCommentsByBlogPostId: ' + id);
-        let blogPost = this.findBlogPostById(id);
+        let blogPost;
+        if (id === -1) {
+            return null;
+        }
+        blogPost = this.findBlogPostById(id);
         console.log(blogPost);
         return blogPost.comments;
     }
@@ -122,7 +126,7 @@ class BlogList extends Component {
     onCreateClick = event => {
         event.preventDefault();
 
-        this.setState({mode : 'create', article : <BlogArticle userDetails={this.state.userDetails} changeMode={this.changeMode} updatePosts={this.updateBlogList} create={true} />});
+        this.setState({mode : 'create', article : <BlogArticle userDetails={this.state.userDetails} changeMode={this.changeMode} updatePosts={this.updateBlogList} create={true} findCommentsByBlogPostId={this.findCommentsByBlogPostId} />});
     }
 
     changeMode(action) {
