@@ -43,7 +43,7 @@ class Comments extends Component {
         if (this.state.userDetails.role === 'ROLE_ADMIN') {
             divComments = comments.map((comment) => {
                 return  <div className="blog-article-content blog-text">{comment.text}
-                            <div className="blog-delete" onClick={this.onDeleteClick} id={comment.id} >DEL</div>
+                            <div className="blog-delete-comment" onClick={this.onDeleteClick} id={comment.id} >DEL</div>
                         </div>
                 })
         } else {

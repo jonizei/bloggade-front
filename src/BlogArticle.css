@@ -72,6 +72,7 @@
 }
 .blog-comment-send,
 .blog-article-submit {
+    text-align: center;
     display: inline-block;
     width: 12%;
     height: 70%;
@@ -134,4 +135,16 @@
     color: yellow;
     padding: 10px;
     padding-left: 5px;
+}
+
+.blog-delete-comment {
+    margin: 0 auto;
+    text-align: center;
+    display: inline-block;
+    width: 12%;
+    height: 100%;
+    color: red;
+    border-radius: 15px;
+    border: 1px solid red;
+    font-weight: bold;
 }
