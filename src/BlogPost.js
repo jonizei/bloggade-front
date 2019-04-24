@@ -27,7 +27,6 @@ class BlogPost extends Component {
 
     onDeleteClick = event => {
         event.preventDefault();
-        console.log(this.state.id);
         this.deletePost();
     }
 
@@ -68,7 +67,6 @@ class BlogPost extends Component {
     }
 
     render() {
-        console.log('BlogPost render');
 
         let header = this.getHeader();
 

@@ -143,7 +143,6 @@ class BlogArticle extends Component {
     }
 
     saveComment() {
-      console.log('Token: ' + this.state.userDetails.token);
 
       let requestObj = {
         id: this.state.id,
@@ -226,7 +225,6 @@ class BlogArticle extends Component {
     }
 
     render() {
-        console.log('BlogArticle render()');
 
         let tempComments = this.props.findCommentsByBlogPostId(this.state.id);
 

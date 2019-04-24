@@ -105,7 +105,6 @@ class App extends Component {
       body: JSON.stringify(newUser),
       dataType: 'json'
     }).then((httpResp) => {
-      console.log(httpResp);
       this.tryLogin(username, password);
     }).catch((msg) => {
       console.log(msg);

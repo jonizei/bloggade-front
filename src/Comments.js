@@ -36,7 +36,6 @@ class Comments extends Component {
     }
 
     render() {
-        console.log('Comments');
         let comments = this.state.comments
         let divComments;
 

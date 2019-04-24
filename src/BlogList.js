@@ -53,8 +53,6 @@ class BlogList extends Component {
     }
 
     onSuccess(jsonObject) {
-        
-        console.log(jsonObject);
 
         let array = [];
         
@@ -62,13 +60,10 @@ class BlogList extends Component {
             array.push(obj);
         }
 
-
-        //this.setState({blogObjects : array, isLoading: false});
         this.buildBlogPosts(array);
     }
 
     buildBlogPosts(postArray) {
-        console.log('buildBlogPosts');
 
         let array = [];
 
@@ -103,13 +98,11 @@ class BlogList extends Component {
     }
 
     findCommentsByBlogPostId(id) {
-        console.log('findCommentsByBlogPostId: ' + id);
         let blogPost;
         if (id === -1) {
             return null;
         }
         blogPost = this.findBlogPostById(id);
-        console.log(blogPost);
         return blogPost.comments;
     }
 
@@ -167,8 +160,6 @@ class BlogList extends Component {
     }
 
     render() {
-
-        console.log('BlogList render()');
 
         if(!this.state.isLoading) {
                 
