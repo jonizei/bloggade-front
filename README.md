@@ -1,3 +1,6 @@
+# Blog frontend
+School project where we worked as a pair. We built a website where user can read, write and edit blog posts.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
